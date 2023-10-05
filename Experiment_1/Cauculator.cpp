@@ -79,6 +79,7 @@ int main(){
 			case 12:
 				LinkList p1;
 				InitList(p1);
+				IndefIntegList(HL, p1);
 				DefIntegList(HL, p1);
 				clearCache();
 				break;

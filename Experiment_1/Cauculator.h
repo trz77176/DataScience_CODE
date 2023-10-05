@@ -53,14 +53,14 @@ return OK;
 } 
 
 Status GetTop (SqStack S, SElemType &e){
-// 若栈不空，则用e返回S的栈顶元素，并返回OK； 否则返回ERROR
+// 若栈不空，则用e返回S的栈顶元素，并返回OK�? 否则返回ERROR
 if(S.top == S.base) return ERROR;
 e=*(S.top-1);
 return OK;
 }
 
 Status Push (SqStack &S, SElemType e){
- // 插入元素e为新的栈顶元素
+ // 插入元素e为新的栈顶元�?
  if(S.top-S.base>=S.stacksize) {
  S.base=(SElemType *)realloc(S.base , 
  (S.stacksize+STACKINCREMENT)*sizeof(SElemType));
@@ -100,7 +100,7 @@ Status Push (SqStack &S, SElemType e){
                 case '=': //脱括号并接收下一字符
                     Pop(OPTR,x); c=getchar();
                     break; 
-                case '>': //退栈并将运算结果入栈
+                case '>': //退栈并将运算结果入�?
                     Pop(OPTR,theta); 
                     Pop(OPND,b); 
                     Pop((PND, a); 
@@ -115,7 +115,7 @@ Status Push (SqStack &S, SElemType e){
 Status InitList_HL(HeadList &L){
     L.elem = (LinkList*)malloc(INITSIZE * sizeof(LinkList));
     if(!L.elem){
-        printf("内存申请失败！");
+        printf("内存申请失败�?");
         return ERROR;
     }
     L.length = 0;
@@ -126,7 +126,7 @@ Status InitList_HL(HeadList &L){
 Status InitList(LinkList &L){
     L =  (LinkList)malloc(sizeof(LNode));
      if(!L){
-        printf("内存申请失败！");
+        printf("内存申请失败�?");
         return ERROR;
     }
     else{
@@ -189,7 +189,7 @@ Status CreateList(HeadList &HL,LinkList &L){
 }
 
 void PrintList(LinkList L){
-    printf("项数：%d\n", L->Length);
+    printf("项数�?%d\n", L->Length);
     LinkList p = L->next;
     printf("%.2f*x^(%d)",p->data.factor,p->data.index);
     p = p->next;
@@ -372,7 +372,7 @@ Status EvaluateList(HeadList HL){
         sum += p->data.factor * pow(eval, p->data.index);
         p = p->next; 
     }
-    printf("多项式带值结果为：%4f", sum);
+    printf("多项式带值结果为�?%4f", sum);
     return OK;
 }
 
@@ -425,7 +425,7 @@ Status InsertNode(LinkList &L){
 Status DeleteNode(LinkList &L){
     printf("此多项式的数据为：\n");
     PrintList(L);
-    printf("请选择删除项的指数：");
+    printf("请选择删除项的指数�?");
     int ch;
     scanf("%d",&ch);
     if(!GetElemFromPol(L,ch)) return ERROR;
@@ -444,7 +444,7 @@ Status DeleteNode(LinkList &L){
 Status AmendNode(LinkList &L){
     printf("此多项式的数据为：\n");
     PrintList(L);
-    printf("请选择修改项的指数：");
+    printf("请选择修改项的指数�?");
     int ch;
     scanf("%d",&ch);
     if(!GetElemFromPol(L,ch)) return ERROR;
@@ -463,7 +463,7 @@ Status AmendNode(LinkList &L){
 
 Status AmendPol(HeadList HL){
     int ch;
-    printf("请选择要进行的操作(1.插入新项 2.删除项 3.修改项):");
+    printf("请选择要进行的操作(1.插入新项 2.删除�? 3.修改�?):");
     scanf("%d",&ch);
     printf("请选择要修改的多项式：");
     int i;
@@ -518,7 +518,7 @@ Status DifList(HeadList HL){
 }
 
 Status PrintIntegList(LinkList p1){
-    printf("项数：%d\n", p1->Length);
+    printf("项数�?%d\n", p1->Length);
     LinkList p2 = p1->next;
     if(!p2->data.index){
             printf("%.2f*lnx", p2->data.factor);
@@ -567,12 +567,12 @@ Status IndefIntegList(HeadList HL, LinkList &p1){
         }
     }
     p1->Length = count;
+    return OK;
 }
 
 
 Status DefIntegList(HeadList HL, LinkList &p1){
-    IndefIntegList(HL, p1);
-    int up, down, sum = 0;
+    float up, down, sum = 0;
     printf("请选择要带入的上下界：");
     scanf("%f%f",&up,&down);
     LinkList p2 = p1->next;
@@ -588,7 +588,7 @@ Status DefIntegList(HeadList HL, LinkList &p1){
         p2 = p2->next;
         }
     }
-    printf("定积分结果为：%.4f\n计算完成!\n", sum);
+    printf("定积分结果为:%.4f\n计算完成!\n", sum);
     return OK;
 }
 
