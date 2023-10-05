@@ -1,3 +1,6 @@
+
+
+
 #include<stdio.h>
 #include<malloc.h>
 #include<stdlib.h>
@@ -188,10 +191,12 @@ Status CreateList(HeadList &HL,LinkList &L){
 void PrintList(LinkList L){
     printf("项数：%d\n", L->Length);
     LinkList p = L->next;
+    printf("%.2f*x^(%d)",p->data.factor,p->data.index);
     while(p){
-        printf("(%.2f,%d) ",p->data.factor,p->data.index);
+        printf("+%.2f*x^(%d)",p->data.factor,p->data.index);
         p = p->next;
     }
+    printf("%.2f*x^(%d)",p->data.factor,p->data.index);
     printf("\n");
 }
 
@@ -536,13 +541,21 @@ Status IndefIntegList(HeadList HL, LinkList &p1){
     p1->Length = count;
     printf("项数：%d\n", p1->Length);
     LinkList p2 = p1->next;
-    while(p2){
-        if(!p2->data.index){
-            printf("(%d,lnx)", p2->data.factor);
+    if(!p2->data.index){
+            printf("%.2f*lnx", p2->data.factor);
             p2 = p2->next;
         }
         else{
-        printf("(%.2f,%d) ",p2->data.factor,p2->data.index);
+        printf("(%.2f*x^(%d) ",p2->data.factor,p2->data.index);
+        p2 = p2->next;
+        }
+    while(p2){
+        if(!p2->data.index){
+            printf("+%f*lnx", p2->data.factor);
+            p2 = p2->next;
+        }
+        else{
+        printf("(+%.2f*x^(%d)+ ",p2->data.factor,p2->data.index);
         p2 = p2->next;
         }
     }
@@ -556,9 +569,16 @@ Status DefIntegList(HeadList HL, LinkList &p1){
     int eval, sum = 0;
     printf("请选择要操作的多项式：");
     scanf("%f",&eval);
-    while(p1){
+    LinkList p2 = p1->next;
+    while(p2){
+         if(!p2->data.index){
+            sum += p1->data.factor * log(eval);
+            p2 = p2->next;
+        }
+        else{
         sum += p1->data.factor * pow(eval, p1->data.index);
         p1 = p1->next;
+        }
     }
     printf("定积分结果为：%4f", sum);
     return OK;
