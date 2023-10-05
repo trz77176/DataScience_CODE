@@ -7,12 +7,16 @@ int main(){
 	int ch;
 	printMenu();
 	while (1) {
+		printf("请选择菜单序号（菜单前的数字）：");
 		scanf("%d", &ch);
 		clearCache();
 		if (ch == 0)
 			break;
 		switch (ch) {
 			case 1:
+				printMenu();
+				break;
+			case 2:
 				printf("是否要继续输入：");
                 int i;
                 scanf("%d",&i);
@@ -29,67 +33,58 @@ int main(){
                     PrintList(HL.elem[d]);
                 }
 				clearCache();
-				printMenu();
 				break;
-			case 2:
+			case 3:
 				for(int d = 1;d <=HeadListLength;d++){
                     printf("第%d个多项式：\n",d);
                     PrintList(HL.elem[d]);
                 }
 				clearCache();
-				printMenu();
-				break;
-			case 3:
-				AddPolynomial(HL);
-				clearCache();
-				printMenu();
 				break;
 			case 4:
-				MinusPolynomial(HL);
+				AddPolynomial(HL);
 				clearCache();
-				printMenu();
 				break;
 			case 5:
-				EvaluateList(HL);
+				MinusPolynomial(HL);
 				clearCache();
-				printMenu();
 				break;
 			case 6:
-				DestroyPol(HL);
+				EvaluateList(HL);
 				clearCache();
-				printMenu();
 				break;
 			case 7:
-				ClearList(HL);
+				DestroyPol(HL);
 				clearCache();
-				printMenu();
 				break;
 			case 8:
-				AmendPol(HL);
+				ClearList(HL);
 				clearCache();
-				printMenu();
 				break;
 			case 9:
+				AmendPol(HL);
+				clearCache();
+				break;
+			case 10:
 				DifList(HL);
 				clearCache();
-				printMenu();
-				break;	
-			case 10:
-				LinkList p;
-				IndefIntegList(HL,p);
-				clearCache();
-				printMenu();
 				break;	
 			case 11:
+				LinkList p;
+				InitList(p);
+				IndefIntegList(HL,p);
+				PrintIntegList(p);
+				clearCache();
+				break;	
+			case 12:
 				LinkList p1;
+				InitList(p1);
 				DefIntegList(HL, p1);
 				clearCache();
-				printMenu();
 				break;
-			case 12:
+			case 13:
 				MultiPolynomial(HL);
 				clearCache();
-				printMenu();
 				break;		
 			default:
 				break;

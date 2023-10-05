@@ -192,12 +192,12 @@ void PrintList(LinkList L){
     printf("项数：%d\n", L->Length);
     LinkList p = L->next;
     printf("%.2f*x^(%d)",p->data.factor,p->data.index);
+    p = p->next;
     while(p){
         printf("+%.2f*x^(%d)",p->data.factor,p->data.index);
         p = p->next;
     }
-    printf("%.2f*x^(%d)",p->data.factor,p->data.index);
-    printf("\n");
+    printf("\n打印完成!\n");
 }
 
 Status AddPolynomial(HeadList HL){
@@ -488,6 +488,7 @@ Status AmendPol(HeadList HL){
             return ERROR;
 
     }
+    return OK;
 }
 
 Status DifList(HeadList HL){
@@ -516,6 +517,31 @@ Status DifList(HeadList HL){
     return OK;
 }
 
+Status PrintIntegList(LinkList p1){
+    printf("项数：%d\n", p1->Length);
+    LinkList p2 = p1->next;
+    if(!p2->data.index){
+            printf("%.2f*lnx", p2->data.factor);
+            p2 = p2->next;
+        }
+        else{
+        printf("%.2f*x^(%d) ",p2->data.factor,p2->data.index);
+        p2 = p2->next;
+        }
+    while(p2){
+        if(!p2->data.index){
+            printf("+%.2f*lnx", p2->data.factor);
+            p2 = p2->next;
+        }
+        else{
+        printf("+%.2f*x^(%d) ",p2->data.factor,p2->data.index);
+        p2 = p2->next;
+        }
+    }
+    printf("+C\n\n计算完成!\n");
+    return OK;
+}
+
 Status IndefIntegList(HeadList HL, LinkList &p1){
     int i, count = 0;
      printf("请选择要操作的多项式：");
@@ -525,68 +551,50 @@ Status IndefIntegList(HeadList HL, LinkList &p1){
     LinkList s = HL.elem[i]->next;
     p1 = p;
     while(s){
-        if(!s->data.index){
+        if(!(s->data.index+1)){
             p->next = s;
             p->next->data.index++;
+            p = p->next;
+            s = s->next;
         }
         else{
         count++;
         p->next= s;
-        p->next->data.factor /= p->next->data.index;
+        p->next->data.factor /= (p->next->data.index+1);
         p->next->data.index ++;
         p = p->next;
         s = s->next;
         }
     }
     p1->Length = count;
-    printf("项数：%d\n", p1->Length);
-    LinkList p2 = p1->next;
-    if(!p2->data.index){
-            printf("%.2f*lnx", p2->data.factor);
-            p2 = p2->next;
-        }
-        else{
-        printf("(%.2f*x^(%d) ",p2->data.factor,p2->data.index);
-        p2 = p2->next;
-        }
-    while(p2){
-        if(!p2->data.index){
-            printf("+%f*lnx", p2->data.factor);
-            p2 = p2->next;
-        }
-        else{
-        printf("(+%.2f*x^(%d)+ ",p2->data.factor,p2->data.index);
-        p2 = p2->next;
-        }
-    }
-    printf("\n");
-    return OK;
 }
 
 
 Status DefIntegList(HeadList HL, LinkList &p1){
     IndefIntegList(HL, p1);
-    int eval, sum = 0;
-    printf("请选择要操作的多项式：");
-    scanf("%f",&eval);
+    int up, down, sum = 0;
+    printf("请选择要带入的上下界：");
+    scanf("%f%f",&up,&down);
     LinkList p2 = p1->next;
     while(p2){
          if(!p2->data.index){
-            sum += p1->data.factor * log(eval);
+            sum += p2->data.factor * log(up);
+            sum -= p2->data.factor * log(down);
             p2 = p2->next;
         }
         else{
-        sum += p1->data.factor * pow(eval, p1->data.index);
-        p1 = p1->next;
+        sum += p2->data.factor * pow(up, p2->data.index);
+        sum -= p2->data.factor * pow(down, p2->data.index);
+        p2 = p2->next;
         }
     }
-    printf("定积分结果为：%4f", sum);
+    printf("定积分结果为：%.4f\n计算完成!\n", sum);
     return OK;
 }
 
-Status Four_rule_operation(HeadList HL){
+/*Status Four_rule_operation(HeadList HL){
 
-}
+}*/
 void printMenu() {
 	printf("\n**********************************\n");
 	printf("\t多项式器功能菜单\t\n");
@@ -594,22 +602,22 @@ void printMenu() {
 	printf("0、退出\n");
     printf("**********************************\n");
     printf(" *基础功能:\t\n");
-	printf("1、输入多项式\n");
-    printf("2、输出多项式：\n");
-	printf("3、多项式加法\n");
-	printf("4、多项式减法\n");
-	printf("5、多项式求值\n");
-    printf("6、销毁多项式\n");
-    printf("7、清空多项式\n");
-    printf("8、修改多项式\n");
+    printf("1、打印菜单\n");
+	printf("2、输入多项式\n");
+    printf("3、输出多项式：\n");
+	printf("4、多项式加法\n");
+	printf("5、多项式减法\n");
+	printf("6、多项式求值\n");
+    printf("7、销毁多项式\n");
+    printf("8、清空多项式\n");
+    printf("9、修改多项式\n");
     printf("**********************************\n");
     printf("*拓展功能:\t\n");
-	printf("9、多项式微分\n");
-	printf("10、多项式不定积分\n");
-	printf("11、多项式定积分\n");
-    printf("12、多项式乘法\n");
+	printf("10、多项式微分\n");
+	printf("11、多项式不定积分\n");
+	printf("12、多项式定积分\n");
+    printf("13、多项式乘法\n");
 	printf("**********************************\n\n");
-	printf("请选择菜单序号（菜单前的数字）：");
 }
 void clearCache(void) {
 	while (getchar() != '\n')
