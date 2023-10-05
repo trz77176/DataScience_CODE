@@ -518,7 +518,7 @@ Status DifList(HeadList HL){
 }
 
 Status PrintIntegList(LinkList p1){
-    printf("项数�?%d\n", p1->Length);
+    printf("项数:%d\n", p1->Length);
     LinkList p2 = p1->next;
     if(!p2->data.index){
             printf("%.2f*lnx", p2->data.factor);
