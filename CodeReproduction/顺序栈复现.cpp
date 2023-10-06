@@ -48,3 +48,11 @@ Status Pop(SqStack &S, SElementype &e){
     e = *--S.top;
     return OK;
 }
+
+/*双栈处理：
+    初始：t[0] = b[0] =base
+          t[1] = b[1] = base + MaxSize - 1
+    栈满条件：t[0] == t[1] 栈顶指针相遇
+    栈空条件：t[0] = b[0] 或 t[1]=b[1] 
+*/
+
