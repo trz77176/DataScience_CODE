@@ -26,6 +26,12 @@ Status InitStack(SqStack &S){
     return OK;
 }
 
+Status DestroyStack(SqStack &s){
+    ClearStack(s);
+    free(s.base);
+    return OK;
+}
+
 Status GetTop(SqStack &S, SElementype &e){
     if(S.top == S.base) return ERROR;
     e = *(S.top - 1);
@@ -56,6 +62,10 @@ Status StackEmpty(SqStack s){
     }
     return ERROR;
 }
+
+Status ClearStack(SqStack &S){
+    S.top = S.base;
+}
 /*双栈处理：
     初始：t[0] = b[0] =base
           t[1] = b[1] = base + MaxSize - 1
@@ -82,6 +92,22 @@ void conversion(){
 }
 
 //2.括号匹配的检验 & 行编辑程序
-
-
-
+void lineedit(){
+    SqStack s;
+    InitStack(s);
+    int ch = getchar();
+    while(ch != EOF){
+        switch(ch){
+            case '#':Pop(s,ch); break;
+            case '@':ClearStack(s); break;
+            default: Push(s,ch); break;
+        }
+        ch = getchar();
+    }
+    //将栈内字符传送到数据区
+    ClearStack(s);
+    if(ch!=EOF){
+        ch = getchar();
+    }
+    DestroyStack(s);
+}
