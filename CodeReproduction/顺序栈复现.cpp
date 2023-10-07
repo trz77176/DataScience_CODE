@@ -111,3 +111,32 @@ void lineedit(){
     }
     DestroyStack(s);
 }
+
+//3.迷宫问题求解
+
+//4.表达式求值
+//（1）中缀表达式求值
+//（2）后缀表达式求值（逆波兰式）
+//（3）前缀表达式求值（波兰式）
+
+//栈与递归
+int Fact(int n){
+    if(!n){
+        return 1;
+    }
+    else return (n * Fact(n-1));
+}
+
+//练习题：搜索无头结点的单链表最后一个结点
+typedef int ElementType;
+typedef struct Node{
+	ElementType data;//数据域
+	struct Node*next;//指针域
+}LNode, *LinkList;
+
+void Print(LinkList L){
+    if(L->next == NULL){
+        printf("%d", L->data);
+    }
+    else Print(L->next);
+}
